@@ -32,9 +32,9 @@
             </div>
 
             <br/>
-            <form action=""  method="GET" value="{{request.GET.q}}" style="margin-top:100px">
+            <form action=""  method="GET" value="" style="margin-top:100px">
                 <h4>Please Enter The Code</h4>
-            <input class="form-control" type="text" id="searchInput" name="q" value="{{request.GET.q}}" placeholder="Search posts"></input>
+            <input class="form-control" type="text" id="searchInput" name="q" value="" placeholder="Search posts"></input>
             <br>
             <div class="row">
                 <div class="col-6">
@@ -49,8 +49,6 @@
 
             
 
-            {% if submitbutton == 'Search' and request.GET.q != '' %}
-            {% if results %}
             <table class="table table-striped" style="margin-top:100px; font-size: 10px;" >
                 <thead class="thead-dark">
                   <tr>
@@ -66,8 +64,8 @@
                 </thead>
 
                 <tbody>
-                    {% for result in results %}
-                  <tr>
+                 
+<!--                   <tr>
                     <th scope="row">{{result.id}}</th>
                     <td>{{result.product_name}}</td>
                     <td>{{result.bar_code}}</td>
@@ -77,14 +75,12 @@
                     <td>{{result.supplier_name}}</td>
                     <td>{{result.s_product_code}}</td>
                   </tr>
-                  {% endfor %}
+                   -->
                 </tbody>
               </table>
 
-              {% else %}
+             
               No search results for this query
-              {% endif %}
-              {% endif %}
            
         </div>
     </div>
