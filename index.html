@@ -34,17 +34,20 @@
             <br/>
 
             <h4>바코드 번호를 입력해주십시오</h4>
-            <input class="form-control" type="text" id="searchInput" name="q" value="" placeholder="검색할 바코드 "></input>
+
+            <input class="form-control" type="text" id="searchInput" name="q" value="" placeholder="검색할 바코드 " onclick="forwarder()"></input>
+
 
             <div class="row" style="margin-top: 40px;">
                 <div class="col-6">
                     <a class="btn btn-danger btn-lg form-control" id="startButton">스캔하기</a>
                 </div>
                 <div class="col-6">
-                    <button class="btn btn-primary btn-lg form-control" id="searchButton" onclick="forwarder()">Search</button>
+                    <button class="btn btn-primary btn-lg form-control" type="submit" id="searchButton" onclick="forwarder()">Search</button>
                     <!-- <a href="" class="btn btn-primary btn-lg form-control" type="submit"  id="searchButton" value="Search" onclick="forwarder()">검색하기</a> -->
                 </div>
             </div>
+        
        
             
 
@@ -162,4 +165,3 @@
     </script>
 </body>
 </html>
-
