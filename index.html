@@ -32,20 +32,21 @@
             </div>
 
             <br/>
-            <form action=""  method="GET" value="" style="margin-top:100px">
-                <h4>Please Enter The Code</h4>
+
+            <h4>Please Enter The Code</h4>
             <input class="form-control" type="text" id="searchInput" name="q" value="" placeholder="Search posts"></input>
-            <br>
-            <div class="row">
+
+            <div class="row" style="margin-top: 40px;">
                 <div class="col-6">
                     <a class="btn btn-danger btn-lg form-control" id="startButton">Scan</a>
                 </div>
                 <div class="col-6">
-                    <input class="btn btn-primary btn-lg form-control" type="submit" name="submit" value="Search"/>
+                    <button class="btn btn-primary btn-lg form-control" id="searchButton" onclick="forwarder()">Search</button>
+                    <!-- <a href="" class="btn btn-primary btn-lg form-control" type="submit"  id="searchButton" value="Search" onclick="forwarder()">Search</a> -->
                 </div>
             </div>
-            </form>
-
+       
+            
 
             
 
@@ -65,17 +66,7 @@
 
                 <tbody>
                  
-<!--                   <tr>
-                    <th scope="row">{{result.id}}</th>
-                    <td>{{result.product_name}}</td>
-                    <td>{{result.bar_code}}</td>
-                    <td>{{result.box_input}}</td>
-                    <td>{{result.quantity}}</td>
-                    <td>{{result.location}}</td>
-                    <td>{{result.supplier_name}}</td>
-                    <td>{{result.s_product_code}}</td>
-                  </tr>
-                   -->
+
                 </tbody>
               </table>
 
@@ -86,7 +77,20 @@
     </div>
     <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
     <script type="text/javascript">
+
+        function forwarder() {
+            let inputValue = document.getElementById("searchInput").value;
+            let href = "https://c6ca-121-140-98-93.jp.ngrok.io/?q="+inputValue+"&submit=Search" 
+            
+            window.location.replace(href)
+        }
+
         window.addEventListener('load', function () {
+            
+            
+            
+
+
             let selectedDeviceId;
             const codeReader = new ZXing.BrowserBarcodeReader()
             console.log('ZXing code reader initialized')
@@ -99,6 +103,7 @@
                             const sourceOption = document.createElement('option')
                             sourceOption.text = element.label
                             sourceOption.value = element.deviceId
+                            
                             sourceSelect.appendChild(sourceOption)
                         })
 
@@ -114,7 +119,7 @@
                         document.getElementById('myDIV').style.display = "block";
                         codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'video').then((result) => {
                             console.log(result)
-
+                            
                             document.getElementById("searchInput").setAttribute('value', result.text);
                             document.getElementById('myDIV').style.display = "none";
                         }).catch((err) => {
@@ -124,16 +129,55 @@
                         console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
                     })
 
-                    document.getElementById('resetButton').addEventListener('click', () => {
-                        document.getElementById('result').textContent = '';
-                        codeReader.reset();
-                        console.log('Reset.')
-                    })
+                    
+
+                    
 
                 })
                 // .catch((err) => {
                 //     console.error(err)
                 // })
+        })
+    </script>
+
+
+
+
+
+    <script>
+        function generateTableHead(table, data) {
+        let thead = table.createHead();
+        let row = thead.insertRow();
+        for (let key of data) {
+            let th = document.createElement("th");
+            let text = document.createTextNode(key);
+            th.appendChild(text);
+            row.appendChild(th);
+            
+        }
+        }
+
+        function generateTable(table, data) {
+        for (let element of data) {
+            let row = table.insertRow();
+            for (key in element) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(element[key]);
+            cell.appendChild(text);
+            }
+        }
+        }
+
+        fetch("names.json")
+        .then(res => res.json())
+        .then(json => {
+
+            let mountains = json;
+            let table = document.querySelector("table");
+            let data = Object.keys(mountains[0]);
+            generateTable(table, mountains); // generate the table first
+            generateTableHead(table, data); // then the head
+
         })
     </script>
 </body>
